@@ -1,0 +1,12 @@
+{
+  "name": "mazevr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodejs server.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
