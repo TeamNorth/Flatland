@@ -20,18 +20,18 @@ function writeOutput(processedJSON, fn){
 
 function createJSON(rawJSON){
     var width = parseInt(rawJSON.svg.$.width);
-    var height = parseInt(rawJSON.svg.$.width);
+    var height = parseInt(rawJSON.svg.$.height);
     var sdim = 16;
 
     var output = {width: width,
 		  height: height,
-		  goal: {w: sdim*6, h: sdim*6, tl: [578, 578]},
+		  goal: {w: 64, h: 96, tl: [210, 274]},
 		  spawn: [
-		      {w: sdim, h: sdim, tl: [2, 2]},
-		      {w: sdim, h: sdim, tl: [width/2, 2]},
-		      {w: sdim, h: sdim, tl: [width-sdim-2, 2]},
-		      {w: sdim, h: sdim, tl: [2, height/2]},
-		      {w: sdim, h: sdim, tl: [2, height-sdim-2]},
+		      {w: sdim, h: sdim, tl: [3, 3]},
+		      {w: sdim, h: sdim, tl: [width/2, 3]},
+		      {w: sdim, h: sdim, tl: [width-sdim-2, 3]},
+		      {w: sdim, h: sdim, tl: [3, height/2]},
+		      {w: sdim, h: sdim, tl: [3, height-sdim-2]},
 		      {w: sdim, h: sdim, tl: [width/2, height-sdim-2]},		      
 		      {w: sdim, h: sdim, tl: [width-sdim-2, height/2]},
 		      {w: sdim, h: sdim, tl: [width-sdim-2, height-sdim-2]},

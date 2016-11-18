@@ -8,13 +8,22 @@
 	  $(function() {
 	      //the following connects to the host same host which we are located.
 	      //to connect to a specific host, do: socket = io('http://localhost', {multiplex: false});
-	      var type = true ? "vr" : "player"
-	      var socket = io("http://localhost:3000/" + type);
+	      var socket = io("http://localhost:3000/player");
 	      
 	      $('#bundle_request').submit(function(){
 		  $('#status').html("requesting bundle...");
 		  socket.emit('bundle_request');
 		  return false;
+	      });
+
+	      $('#prep').submit(function(){
+		  $('#status').html("prep");
+		  socket.emit('prep');
+		  return false;
+	      });
+
+	      socket.on("prep_resp", function(data){
+		  console.log("got stuff", data);
 	      });
 	     
 	      socket.on("bundle_resp", function(data) {
@@ -47,12 +56,8 @@
 		<input id="u" autocomplete="off" placeholder="username"/><br><input id="p" autocomplete="off" placeholder="password"/><input type=submit />
 	</form>
 	
-	<br>New copy:<br>
-	<form id="msg" action="" method="post">
-		<input id="m" autocomplete="off" /><input type=submit />
+	prep: <form id="prep" action="" method="post">
+		<input type=submit />
 	</form>
-	<br>
-	<h4>Copies:</h4>
-	<ul id="cpy"></ul>
 </body>
 </html>
