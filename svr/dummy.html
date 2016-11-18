@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript">
+    	  
+	  $(function() {
+	      //the following connects to the host same host which we are located.
+	      //to connect to a specific host, do: socket = io('http://localhost', {multiplex: false});
+	      var type = true ? "vr" : "player"
+	      var socket = io("http://localhost:3000/" + type);
+	      
+	      $('#bundle_request').submit(function(){
+		  $('#status').html("requesting bundle...");
+		  socket.emit('bundle_request');
+		  return false;
+	      });
+	     
+	      socket.on("bundle_resp", function(data) {
+		  $('#status').html("got bundle_resp " + data.substr(0, 10));
+		  return false;
+	      });
+
+	      socket.on("vr_ready", function(){
+		  
+	      });
+	      
+	      //to display the connection status:
+	      socket.on("connect", function() {
+		  $('#status').html("connected successfully");
+	      });
+	      socket.on("disconnect", function() {
+		  $('#status').html("disconnected");		  
+		});
+	});
+	</script>
+</head>
+
+<body>
+  status: <span id="status"></span><br><br>
+  bundle_request: <form id="bundle_request" action="" method="post"><input type=submit /></form><br>
+  bundle_resp: <span id="bundle_resp"></span>
+
+  
+	<form id="auth" action="" method="post">
+		<input id="u" autocomplete="off" placeholder="username"/><br><input id="p" autocomplete="off" placeholder="password"/><input type=submit />
+	</form>
+	
+	<br>New copy:<br>
+	<form id="msg" action="" method="post">
+		<input id="m" autocomplete="off" /><input type=submit />
+	</form>
+	<br>
+	<h4>Copies:</h4>
+	<ul id="cpy"></ul>
+</body>
+</html>

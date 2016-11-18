@@ -21,10 +21,23 @@ function writeOutput(processedJSON, fn){
 function createJSON(rawJSON){
     var width = parseInt(rawJSON.svg.$.width);
     var height = parseInt(rawJSON.svg.$.width);
+    var sdim = 16;
 
     var output = {width: width,
 		  height: height,
-		  map:[]};
+		  goal: {w: sdim*6, h: sdim*6, tl: [578, 578]},
+		  spawn: [
+		      {w: sdim, h: sdim, tl: [2, 2]},
+		      {w: sdim, h: sdim, tl: [width/2, 2]},
+		      {w: sdim, h: sdim, tl: [width-sdim-2, 2]},
+		      {w: sdim, h: sdim, tl: [2, height/2]},
+		      {w: sdim, h: sdim, tl: [2, height-sdim-2]},
+		      {w: sdim, h: sdim, tl: [width/2, height-sdim-2]},		      
+		      {w: sdim, h: sdim, tl: [width-sdim-2, height/2]},
+		      {w: sdim, h: sdim, tl: [width-sdim-2, height-sdim-2]},
+		  ],
+		  map:[],
+		 };
 
     var main = rawJSON.svg.g[0];
     var lines = main.line;
@@ -33,22 +46,21 @@ function createJSON(rawJSON){
     var half_width = line_width / 2;
 
     for (var i = 0; i < lines.length; i++) {
-	var x1 = lines[i].$.x1;
-	var y1 = lines[i].$.y1;
-	var x2 = lines[i].$.x2;
-	var y2 = lines[i].$.y2;
+	var x1 = parseInt(lines[i].$.x1);
+	var y1 = parseInt(lines[i].$.y1);
+	var x2 = parseInt(lines[i].$.x2);
+	var y2 = parseInt(lines[i].$.y2);
 
 	var width, height, tl;
 	
-	if(x1 == x2){
+	if(x1 === x2){
 	    width = line_width;
 	    height = Math.abs(y1 - y2);
-	    tl = [x1 - half_width,  Math.min(y1, y2)];
-	    
+	    tl = [x1,  Math.min(y1, y2)];
 	}else{
 	    width = Math.abs(x1 - x2);
 	    height = line_width;
-	    tl = [Math.min(x1, x2), y1 - half_width];
+	    tl = [Math.min(x1, x2), y1];
 	}
 
 	obj = {
